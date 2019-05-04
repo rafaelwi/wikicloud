@@ -1,7 +1,7 @@
 # wcfuncts.py: Word Cloud Functions
 
 """ Libraries """
-from requests.exceptions import RequrstException
+from requests.exceptions import RequestException
 from requests import get
 from contextlib import closing
 from bs4 import BeautifulSoup
@@ -54,6 +54,16 @@ def is_good_response(resp):
 
 
 def print_page_text(url):
+    bs4_para_text = ''
     raw_html = get_page(url)
     bs4_html = BeautifulSoup(raw_html, 'html.parser')
+
+    # Get all instances of find_all
+    bs4_find_all = bs4_html.find_all('p')
+
+    for i in bs4_find_all:
+        bs4_para_text += i.get_text()
+
+    print (bs4_para_text)
+# end print_page_text(url)
 
