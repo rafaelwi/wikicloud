@@ -7,6 +7,18 @@ from contextlib import closing
 from bs4 import BeautifulSoup
 import lxml
 
+"""Prints out the message passed in. Used for debugging
+
+Args:
+    m: A message
+
+Returns: 
+    the message
+"""
+def log_message(m):
+    print (m)
+# end log_message(m)
+
 
 """Gets the page source of a requested website
 Args:
@@ -39,3 +51,9 @@ Returns:
 def is_good_response(resp):
     return (resp.status_code == 200 and resp.headers['Content-Type'].lower() is not None and resp.headers['Content-Type'].lower().find('html') > -1)
 # end is_good_response(resp)
+
+
+def print_page_text(url):
+    raw_html = get_page(url)
+    bs4_html = BeautifulSoup(raw_html, 'html.parser')
+
