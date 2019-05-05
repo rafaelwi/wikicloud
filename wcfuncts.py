@@ -85,6 +85,14 @@ def get_page_text(url):
 # end print_page_text(url)
 
 
+""" Generates a word cloud from a block of text
+
+Args:
+    text: A string containing a block of text
+
+Returns:
+    no value. Creates a word cloud as an image and saves it
+"""
 def generate_word_cloud(text):
     # Word cloud set up
     stopwords = STOPWORDS
