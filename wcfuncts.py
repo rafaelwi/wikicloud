@@ -72,7 +72,7 @@ def print_page_text(url):
 
     bs4_para_text = bs4_para_text.lower()
 
-    print (bs4_para_text)
+    #print (bs4_para_text)
     return bs4_para_text
 # end print_page_text(url)
 
@@ -85,6 +85,7 @@ def generate_word_cloud(text):
     plt.axis("off")
     plt.tight_layout(pad = 0)
 
-    plt.show()
+    plt.savefig('deathgrips.png', bbox_inches='tight')
+    log_message("Saved plot")
 # end generate_word_cloud(text)
 
