@@ -1,6 +1,12 @@
 # wcfuncts.py: Word Cloud Functions
 
 """ Libraries """
+import numpy
+import pandas as pd 
+from PIL import Image
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
+
 from requests.exceptions import RequestException
 from requests import get
 from contextlib import closing
@@ -64,6 +70,21 @@ def print_page_text(url):
     for i in bs4_find_all:
         bs4_para_text += i.get_text()
 
+    bs4_para_text = bs4_para_text.lower()
+
     print (bs4_para_text)
+    return bs4_para_text
 # end print_page_text(url)
+
+
+def generate_word_cloud(text):
+    stopwords = STOPWORDS
+    cloud = WordCloud(width = 800, height = 800, background_color = 'white', stopwords = stopwords, min_font_size = 10).generate(text)
+    plt.figure(figsize = (8, 8), facecolor = None)
+    plt.imshow(cloud)
+    plt.axis("off")
+    plt.tight_layout(pad = 0)
+
+    plt.show()
+# end generate_word_cloud(text)
 
