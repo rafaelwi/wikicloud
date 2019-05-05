@@ -59,6 +59,15 @@ def is_good_response(resp):
 # end is_good_response(resp)
 
 
+"""Gets the text from a webpage found inbetween <p> tags
+
+Args:
+    url: URL of the webpage that is being scraped
+
+Returns:
+    a string containing all of the text on the page
+
+"""
 def get_page_text(url):
     bs4_para_text = ''
     raw_html = get_page(url)
