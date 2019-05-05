@@ -18,6 +18,6 @@ import sys
 """ Main Program """
 url = 'https://en.wikipedia.org/wiki/Death_Grips'
 
-page_text = wc.print_page_text(url)
+page_text = wc.get_page_text(url)
 
 wc.generate_word_cloud(page_text)

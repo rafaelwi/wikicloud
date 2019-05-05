@@ -59,33 +59,36 @@ def is_good_response(resp):
 # end is_good_response(resp)
 
 
-def print_page_text(url):
+def get_page_text(url):
     bs4_para_text = ''
     raw_html = get_page(url)
-    bs4_html = BeautifulSoup(raw_html, 'html.parser')
+    bs4_html = BeautifulSoup(raw_html, 'lxml')
+    log_message('Got raw HTML of <' + url + '>')
 
-    # Get all instances of find_all
+    # Get all instances of text on the page
     bs4_find_all = bs4_html.find_all('p')
-
     for i in bs4_find_all:
         bs4_para_text += i.get_text()
-
     bs4_para_text = bs4_para_text.lower()
+    log_message('Got raw text of <' + url + '>')
 
-    #print (bs4_para_text)
     return bs4_para_text
 # end print_page_text(url)
 
 
 def generate_word_cloud(text):
+    # Word cloud set up
     stopwords = STOPWORDS
+    
+    log_message ('Generating plot...')
     cloud = WordCloud(width = 800, height = 800, background_color = 'white', stopwords = stopwords, min_font_size = 10).generate(text)
     plt.figure(figsize = (8, 8), facecolor = None)
     plt.imshow(cloud)
     plt.axis("off")
     plt.tight_layout(pad = 0)
 
+    # Save the word cloud
     plt.savefig('deathgrips.png', bbox_inches='tight')
-    log_message("Saved plot")
+    log_message('Saved plot!')
 # end generate_word_cloud(text)
 
