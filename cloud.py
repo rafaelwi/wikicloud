@@ -3,10 +3,7 @@
 
 """ Libraries """
 # For word cloud
-import numpy
-import pandas as pd 
-from PIL import Image
-from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
+
 #import mathplotlib.pyplit as plt
 
 # For reading the page
@@ -21,4 +18,6 @@ import sys
 """ Main Program """
 url = 'https://en.wikipedia.org/wiki/Death_Grips'
 
-wc.print_page_text(url)
+page_text = wc.print_page_text(url)
+
+wc.generate_word_cloud(page_text)
