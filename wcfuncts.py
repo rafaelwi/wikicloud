@@ -1,9 +1,6 @@
 # wcfuncts.py: Word Cloud Functions
 
 """ Libraries """
-import numpy
-import pandas as pd 
-from PIL import Image
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 
