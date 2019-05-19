@@ -13,8 +13,8 @@ wikipedia word cloud generator in python3
 
 ## Using the script
 To get a specific article:
-`python3 cloud.py https://en.wikipedia.org/wiki/GitHub` or
-`python3 cloud.py Github`
+`python3 cloud.py https://en.wikipedia.org/wiki/GitHub` ~~or
+`python3 cloud.py Github`~~
 
 # To add
 - Resize plots
