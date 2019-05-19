@@ -38,7 +38,8 @@ def get_page(url):
                 return None
 
     except RequestException as e:
-            log_message('Error during requests to {0} : {1}'.format(url, str(e)))
+            log_message('Error during requests to {0} : {1}'
+                .format(url, str(e)))
             return None
 # end get_page(url)
 
@@ -52,7 +53,8 @@ Returns:
     true if a successful connection has been made and false otherwise
 """
 def is_good_response(resp):
-    return (resp.status_code == 200 and resp.headers['Content-Type'].lower() is not None and resp.headers['Content-Type'].lower().find('html') > -1)
+    return (resp.status_code == 200 and resp.headers['Content-Type'].lower() 
+    is not None and resp.headers['Content-Type'].lower().find('html') > -1)
 # end is_good_response(resp)
 
 
@@ -95,7 +97,8 @@ def generate_word_cloud(text):
     stopwords = STOPWORDS
     
     log_message ('Generating plot...')
-    cloud = WordCloud(width = 800, height = 800, background_color = 'white', stopwords = stopwords, min_font_size = 10).generate(text)
+    cloud = WordCloud(width = 800, height = 800, background_color = 'white', 
+        stopwords = stopwords, min_font_size = 10).generate(text)
     plt.figure(figsize = (8, 8), facecolor = None)
     plt.imshow(cloud)
     plt.axis("off")
