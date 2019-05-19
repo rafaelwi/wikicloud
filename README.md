@@ -1,4 +1,4 @@
-# wiki-word-cloud
+# wikicloud
 wikipedia word cloud generator in python3
 
 # Features
@@ -6,7 +6,7 @@ wikipedia word cloud generator in python3
 
 
 # Running
-1. Clone the repo using `git clone https://github.com/rafaelwi/wiki-word-cloud.git`
+1. Clone the repo using `git clone https://github.com/rafaelwi/wikicloud.git`
 2. Ensure that you have `requests`, `matplotlib`, `BeautifulSoup`, and `lxml` are installed
 3. Run the script
 4. FInd the image of the plot in the `plots` folder
