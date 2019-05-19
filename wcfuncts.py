@@ -1,6 +1,8 @@
 # wcfuncts.py: Word Cloud Functions
 
 """ Libraries """
+import sys
+
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 
@@ -21,6 +23,44 @@ Returns:
 def log_message(m):
     print (m)
 # end log_message(m)
+
+"""Gets the URL and verifies that it is valid
+
+Args:
+    args: List of arguments from the command line
+
+Returns:
+    the URL entered
+"""
+def get_url(args):
+    # Check if the correct number of args was passed in
+    if len(args) != 2:
+        log_message('Usage: python3 cloud.py <wikipedia URL>')
+        sys.exit()
+    # end if
+
+    # Get the URL and check that it is valid
+    raw_url = args[1]
+    split_url = raw_url.split('/')
+    print (split_url)
+    print (len(split_url))
+
+    # Validate and return URL
+    if (len(split_url) == 5) & (split_url[3] == 'wiki'):
+        return raw_url
+    # end if
+    
+    # If the URL is not valid
+    else:
+        log_message((
+            'Error: Ending execution due to invalid URL passed in: <{}>'
+            ' URL should be in the form of \x1b[1mhttps://en.wikipedia.org/wik'
+            'i/Article_Name \x1b[0m'.format(raw_url)
+            ))
+        sys.exit()
+    # end else
+# end get_url(args)
+
 
 
 """Gets the page source of a requested website

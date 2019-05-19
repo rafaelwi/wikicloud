@@ -1,12 +1,13 @@
 # wiki word cloud generator
 # github: rafaelwi
 
-""" Libraries """
-# For reading the page
+""" Imports """
+import sys
 import wcfuncts as wc 
 
 """ Main Program """
-url = 'https://en.wikipedia.org/wiki/Death_Grips'
+# Get URL
+url = wc.get_url(sys.argv)
 
 page_text = wc.get_page_text(url)
 
