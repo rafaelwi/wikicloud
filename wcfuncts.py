@@ -1,6 +1,13 @@
 # wcfuncts.py: Word Cloud Functions
+# github: rafaelwi
 
-""" Libraries """
+"""
+TODO NEXT:
+- Allow plots to be generated from just the article name
+- Allow changing the attributes of the plot generated
+"""
+
+""" Imports """
 import sys
 
 import matplotlib.pyplot as plt
@@ -11,6 +18,7 @@ from requests import get
 from contextlib import closing
 from bs4 import BeautifulSoup
 import lxml
+
 
 """Prints out the message passed in. Used for debugging
 
@@ -24,11 +32,10 @@ def log_message(m):
     print (m)
 # end log_message(m)
 
-"""Gets the URL and verifies that it is valid
 
+"""Gets the URL and verifies that it is valid
 Args:
     args: List of arguments from the command line
-
 Returns:
     the URL entered
 """
@@ -42,8 +49,6 @@ def get_url(args):
     # Get the URL and check that it is valid
     raw_url = args[1]
     split_url = raw_url.split('/')
-    print (split_url)
-    print (len(split_url))
 
     # Validate and return URL
     if (len(split_url) == 5) & (split_url[3] == 'wiki'):
@@ -63,10 +68,8 @@ def get_url(args):
 
 
 """Gets the filename of the plot
-
 Args:
     url: Wikipedia URL of the page
-
 Returns:
     A filename for the plot
 """
@@ -98,10 +101,8 @@ def get_page(url):
 
 
 """Checks if the response from the URL is good
-
 Args:
     resp: Respond from website of connection status
-
 Returns: 
     true if a successful connection has been made and false otherwise
 """
@@ -112,36 +113,34 @@ def is_good_response(resp):
 
 
 """Gets the text from a webpage found inbetween <p> tags
-
 Args:
     url: URL of the webpage that is being scraped
-
 Returns:
     a string containing all of the text on the page
-
 """
 def get_page_text(url):
     bs4_para_text = ''
     raw_html = get_page(url)
     bs4_html = BeautifulSoup(raw_html, 'lxml')
-    log_message('Got raw HTML of <' + url + '>')
+    log_message('Got raw HTML of <{}>'.format(url))
 
     # Get all instances of text on the page
     bs4_find_all = bs4_html.find_all('p')
+
     for i in bs4_find_all:
         bs4_para_text += i.get_text()
+    # end for
+    
     bs4_para_text = bs4_para_text.lower()
-    log_message('Got raw text of <' + url + '>')
+    log_message('Got raw text of <{}>'.format(url))
 
     return bs4_para_text
 # end print_page_text(url)
 
 
 """ Generates a word cloud from a block of text
-
 Args:
     text: A string containing a block of text
-
 Returns:
     no value. Creates a word cloud as an image and saves it
 """
@@ -149,6 +148,7 @@ def generate_word_cloud(text, filename):
     # Word cloud set up
     stopwords = STOPWORDS
     
+    # Generate the word cloud
     log_message ('Generating plot...')
     cloud = WordCloud(width = 800, height = 800, background_color = 'white', 
         stopwords = stopwords, min_font_size = 10).generate(text)
@@ -160,5 +160,6 @@ def generate_word_cloud(text, filename):
     # Save the word cloud
     plt.savefig(filename, bbox_inches='tight')
     log_message('Saved plot as {}!'.format(filename))
-# end generate_word_cloud(text)
+# end generate_word_cloud(text, filename)
 
+### end of file wcfuncts.py ###

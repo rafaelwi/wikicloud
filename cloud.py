@@ -11,8 +11,11 @@ url = wc.get_url(sys.argv)
 
 # Get filename
 filename = wc.get_filename(url)
-print(filename)
 
+# Get page text
 page_text = wc.get_page_text(url)
 
+# Generate and save word cloud
 wc.generate_word_cloud(page_text, filename)
+
+### end of script cloud.py ###
