@@ -1,4 +1,4 @@
-# wiki-word-cloud
+# wikicloud
 wikipedia word cloud generator in python3
 
 # Features

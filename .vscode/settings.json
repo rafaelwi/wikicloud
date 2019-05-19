@@ -1,0 +1,8 @@
+// Workspace Settings
+
+{
+    "files.exclude": {
+        "**/*.png": true,
+        "**/*.txt": true
+    }
+}
