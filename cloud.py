@@ -9,6 +9,10 @@ import wcfuncts as wc
 # Get URL
 url = wc.get_url(sys.argv)
 
+# Get filename
+filename = wc.get_filename(url)
+print(filename)
+
 page_text = wc.get_page_text(url)
 
-wc.generate_word_cloud(page_text)
+wc.generate_word_cloud(page_text, filename)

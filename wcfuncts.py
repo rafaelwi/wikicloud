@@ -62,6 +62,19 @@ def get_url(args):
 # end get_url(args)
 
 
+"""Gets the filename of the plot
+
+Args:
+    url: Wikipedia URL of the page
+
+Returns:
+    A filename for the plot
+"""
+def get_filename(url):
+    return url.split('/')[4] + '.png'
+# end get_filename(ur;)
+
+
 
 """Gets the page source of a requested website
 Args:
@@ -132,7 +145,7 @@ Args:
 Returns:
     no value. Creates a word cloud as an image and saves it
 """
-def generate_word_cloud(text):
+def generate_word_cloud(text, filename):
     # Word cloud set up
     stopwords = STOPWORDS
     
@@ -145,7 +158,7 @@ def generate_word_cloud(text):
     plt.tight_layout(pad = 0)
 
     # Save the word cloud
-    plt.savefig('deathgrips.png', bbox_inches='tight')
-    log_message('Saved plot!')
+    plt.savefig(filename, bbox_inches='tight')
+    log_message('Saved plot as {}!'.format(filename))
 # end generate_word_cloud(text)
 
