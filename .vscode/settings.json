@@ -3,6 +3,7 @@
 {
     "files.exclude": {
         "**/*.png": true,
-        "**/*.txt": true
+        "**/*.txt": true,
+        "**/__pycache__": true
     }
 }

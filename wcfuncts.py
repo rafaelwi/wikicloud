@@ -3,6 +3,7 @@
 
 """
 TODO NEXT:
+- Check if an article exists with 'Wikipedia does not have an article with this exact name'
 - Allow plots to be generated from just the article name
 - Allow changing the attributes of the plot generated
 """
@@ -34,12 +35,23 @@ def log_message(m):
 
 
 """Gets the URL and verifies that it is valid
+
 Args:
     args: List of arguments from the command line
+
 Returns:
     the URL entered
 """
-def get_url(args):
+def get_args(args):
+    # Check if the user passes in the page URL as page="abc"
+    for a in args:
+        try:
+            page_arg = a.index('page=')
+            return create_wiki_url(a)
+            
+        except:
+            pass
+
     # Check if the correct number of args was passed in
     if len(args) != 2:
         log_message('Usage: python3 cloud.py <wikipedia URL>')
@@ -64,8 +76,26 @@ def get_url(args):
             ))
         sys.exit()
     # end else
-# end get_url(args)
+# end get_args(args)
 
+
+"""Creates a wikipedia URL when a page name is passed through
+Args:
+    page_arg: The arguement containing the page name
+
+Returns:
+    A Wikipedia URL for the page requested
+"""
+def create_wiki_url(page_arg):
+    # Find the = in the arg
+    equal_loc = page_arg.index('=') + 1
+
+    page_name = page_arg[equal_loc:]
+    print(page_name)
+    return ('https://en.wikipedia.org/wiki/{}'.format(page_name))
+
+
+# end create_wiki_url(page_arg)
 
 """Gets the filename of the plot
 Args:
