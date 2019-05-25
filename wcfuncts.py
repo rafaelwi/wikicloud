@@ -3,7 +3,6 @@
 
 """
 TODO NEXT:
-- Check if an article exists with 'Wikipedia does not have an article with this exact name'
 - Allow changing the attributes of the plot generated
 """
 
@@ -83,7 +82,6 @@ def get_args(args):
 Args:
     page_arg: The arguement containing the page name
 
-
 Returns:
     A Wikipedia URL for the page requested
 """
@@ -94,7 +92,6 @@ def create_wiki_url(page_arg):
 
     # Convert all spaces to underscores
     page_name = page_name.replace(' ', '_')
-    print(page_name)
     return ('https://en.wikipedia.org/wiki/{}'.format(page_name))
 # end create_wiki_url(page_arg)
 
@@ -161,6 +158,15 @@ Returns:
 def get_page_text(url):
     bs4_para_text = ''
     raw_html = get_page(url)
+
+    # Check if a valid page was fetched
+    if raw_html == None:
+        log_message(('Error: Ending execution due to no article named "{}" on '
+        'Wikipedia. Please make sure you have typed in the page name '
+        'correctly'.format(url.split('/')[4].replace('_', ' '))))
+        sys.exit()
+    # end if
+
     bs4_html = BeautifulSoup(raw_html, 'lxml')
     log_message('Got raw HTML of <{}>'.format(url))
 
@@ -173,7 +179,6 @@ def get_page_text(url):
     
     bs4_para_text = bs4_para_text.lower()
     log_message('Got raw text of <{}>'.format(url))
-
     return bs4_para_text
 # end print_page_text(url)
 
