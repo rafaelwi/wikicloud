@@ -4,7 +4,6 @@
 """
 TODO NEXT:
 - Check if an article exists with 'Wikipedia does not have an article with this exact name'
-- Allow plots to be generated from just the article name
 - Allow changing the attributes of the plot generated
 """
 
@@ -80,8 +79,10 @@ def get_args(args):
 
 
 """Creates a wikipedia URL when a page name is passed through
+
 Args:
     page_arg: The arguement containing the page name
+
 
 Returns:
     A Wikipedia URL for the page requested
@@ -89,17 +90,20 @@ Returns:
 def create_wiki_url(page_arg):
     # Find the = in the arg
     equal_loc = page_arg.index('=') + 1
-
     page_name = page_arg[equal_loc:]
+
+    # Convert all spaces to underscores
+    page_name = page_name.replace(' ', '_')
     print(page_name)
     return ('https://en.wikipedia.org/wiki/{}'.format(page_name))
-
-
 # end create_wiki_url(page_arg)
 
+
 """Gets the filename of the plot
+
 Args:
     url: Wikipedia URL of the page
+
 Returns:
     A filename for the plot
 """
@@ -110,8 +114,10 @@ def get_filename(url):
 
 
 """Gets the page source of a requested website
+
 Args:
     url: The URL of the page that the source will be taken from
+
 Returns: 
     the source code of the URL passed in
 """
@@ -131,8 +137,10 @@ def get_page(url):
 
 
 """Checks if the response from the URL is good
+
 Args:
     resp: Respond from website of connection status
+
 Returns: 
     true if a successful connection has been made and false otherwise
 """
@@ -143,8 +151,10 @@ def is_good_response(resp):
 
 
 """Gets the text from a webpage found inbetween <p> tags
+
 Args:
     url: URL of the webpage that is being scraped
+
 Returns:
     a string containing all of the text on the page
 """
@@ -169,8 +179,10 @@ def get_page_text(url):
 
 
 """ Generates a word cloud from a block of text
+
 Args:
     text: A string containing a block of text
+
 Returns:
     no value. Creates a word cloud as an image and saves it
 """
@@ -191,5 +203,4 @@ def generate_word_cloud(text, filename):
     plt.savefig(filename, bbox_inches='tight')
     log_message('Saved plot as {}!'.format(filename))
 # end generate_word_cloud(text, filename)
-
 ### end of file wcfuncts.py ###
