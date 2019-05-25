@@ -3,7 +3,6 @@
 
 """
 TODO NEXT:
-- Allow plots to be generated from just the article name
 - Allow changing the attributes of the plot generated
 """
 
@@ -34,12 +33,23 @@ def log_message(m):
 
 
 """Gets the URL and verifies that it is valid
+
 Args:
     args: List of arguments from the command line
+
 Returns:
     the URL entered
 """
-def get_url(args):
+def get_args(args):
+    # Check if the user passes in the page URL as page="abc"
+    for a in args:
+        try:
+            page_arg = a.index('page=')
+            return create_wiki_url(a)
+            
+        except:
+            pass
+
     # Check if the correct number of args was passed in
     if len(args) != 2:
         log_message('Usage: python3 cloud.py <wikipedia URL>')
@@ -64,12 +74,33 @@ def get_url(args):
             ))
         sys.exit()
     # end else
-# end get_url(args)
+# end get_args(args)
+
+
+"""Creates a wikipedia URL when a page name is passed through
+
+Args:
+    page_arg: The arguement containing the page name
+
+Returns:
+    A Wikipedia URL for the page requested
+"""
+def create_wiki_url(page_arg):
+    # Find the = in the arg
+    equal_loc = page_arg.index('=') + 1
+    page_name = page_arg[equal_loc:]
+
+    # Convert all spaces to underscores
+    page_name = page_name.replace(' ', '_')
+    return ('https://en.wikipedia.org/wiki/{}'.format(page_name))
+# end create_wiki_url(page_arg)
 
 
 """Gets the filename of the plot
+
 Args:
     url: Wikipedia URL of the page
+
 Returns:
     A filename for the plot
 """
@@ -80,8 +111,10 @@ def get_filename(url):
 
 
 """Gets the page source of a requested website
+
 Args:
     url: The URL of the page that the source will be taken from
+
 Returns: 
     the source code of the URL passed in
 """
@@ -101,8 +134,10 @@ def get_page(url):
 
 
 """Checks if the response from the URL is good
+
 Args:
     resp: Respond from website of connection status
+
 Returns: 
     true if a successful connection has been made and false otherwise
 """
@@ -113,14 +148,25 @@ def is_good_response(resp):
 
 
 """Gets the text from a webpage found inbetween <p> tags
+
 Args:
     url: URL of the webpage that is being scraped
+
 Returns:
     a string containing all of the text on the page
 """
 def get_page_text(url):
     bs4_para_text = ''
     raw_html = get_page(url)
+
+    # Check if a valid page was fetched
+    if raw_html == None:
+        log_message(('Error: Ending execution due to no article named "{}" on '
+        'Wikipedia. Please make sure you have typed in the page name '
+        'correctly'.format(url.split('/')[4].replace('_', ' '))))
+        sys.exit()
+    # end if
+
     bs4_html = BeautifulSoup(raw_html, 'lxml')
     log_message('Got raw HTML of <{}>'.format(url))
 
@@ -133,14 +179,15 @@ def get_page_text(url):
     
     bs4_para_text = bs4_para_text.lower()
     log_message('Got raw text of <{}>'.format(url))
-
     return bs4_para_text
 # end print_page_text(url)
 
 
 """ Generates a word cloud from a block of text
+
 Args:
     text: A string containing a block of text
+
 Returns:
     no value. Creates a word cloud as an image and saves it
 """
@@ -161,5 +208,4 @@ def generate_word_cloud(text, filename):
     plt.savefig(filename, bbox_inches='tight')
     log_message('Saved plot as {}!'.format(filename))
 # end generate_word_cloud(text, filename)
-
 ### end of file wcfuncts.py ###

@@ -13,8 +13,11 @@ wikipedia word cloud generator in python3
 
 ## Using the script
 To get a specific article:
-`python3 cloud.py https://en.wikipedia.org/wiki/GitHub` ~~or
-`python3 cloud.py Github`~~
+`python3 cloud.py https://en.wikipedia.org/wiki/GitHub` or 
+`python3 cloud.py page='GitHub'`
+
+For articles with spaces in its name, both `python3 cloud.py page='New_York_City'` and 
+`python3 cloud.py page='New York City'` work.
 
 # To add
 - Resize plots

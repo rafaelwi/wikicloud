@@ -7,7 +7,7 @@ import wcfuncts as wc
 
 """ Main Program """
 # Get URL
-url = wc.get_url(sys.argv)
+url = wc.get_args(sys.argv)
 
 # Get filename
 filename = wc.get_filename(url)
