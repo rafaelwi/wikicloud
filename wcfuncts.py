@@ -32,25 +32,36 @@ Returns:
 """
 def parse_cl_args(args):
     # Set up arguements parser
-    parser = argparse.ArguementParser()
-    parser.add_arguement('-v', '--version', help='shows version number')
-    parser.add_arguement('-a', '--about', help='shows about the author')
-    parser.add_arguement('article')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-v', '--version', action="store_true", 
+        help='shows version number')
+    parser.add_argument('-ab', '--about', action="store_true", 
+        help='shows about the author')
+    parser.add_argument('-a', '--article', help=('the name or URL of the art'
+        'icle of which you want to generate a word cloud for'))
 
     args = parser.parse_args()
 
+    # --version/-v arguement
     if args.version:
         log_message('wikicloud ver. 2019.05.26.01')
         sys.exit()
     # end if
 
+    # --about/-ab arguement
     elif args.about:
         log_message(('wikicloud is a python script written by rafaelwi that '
             'generates word clouds from wikipedia articles. Use `python3 '
             ' cloud.py --help` to learn how to use the script.'))
         sys.exit()
-    # end if
+    # end elif
 
+    # --article/-a arguement
+    elif args.article:
+        raw_article = args.article
+        # TODO Check if article is just name or a URL
+        print(raw_article)
+    # end else
 # end parse_cl_args(args)
 
 

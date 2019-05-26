@@ -6,6 +6,9 @@ import sys
 import wcfuncts as wc 
 
 """ Main Program """
+# Parse command line arguements
+article = wc.parse_cl_args(sys.argv)
+
 # Get URL
 url = wc.get_args(sys.argv)
 
