@@ -3,11 +3,15 @@
 
 """
 TODO NEXT:
+- Make arguments more 'unix' style, i.e., -page 'Bananas' rather than
+  page='Bananas'
+  - Add a -help command
 - Allow changing the attributes of the plot generated
 """
 
 """ Imports """
 import sys
+import argparse
 
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
@@ -17,6 +21,38 @@ from requests import get
 from contextlib import closing
 from bs4 import BeautifulSoup
 import lxml
+
+""" Parse arguements from command line
+
+Args:
+    args: A list of arguements from the command line
+
+Returns: 
+    pass
+"""
+def parse_cl_args(args):
+    # Set up arguements parser
+    parser = argparse.ArguementParser()
+    parser.add_arguement('-v', '--version', help='shows version number')
+    parser.add_arguement('-a', '--about', help='shows about the author')
+    parser.add_arguement('article')
+
+    args = parser.parse_args()
+
+    if args.version:
+        log_message('wikicloud ver. 2019.05.26.01')
+        sys.exit()
+    # end if
+
+    elif args.about:
+        log_message(('wikicloud is a python script written by rafaelwi that '
+            'generates word clouds from wikipedia articles. Use `python3 '
+            ' cloud.py --help` to learn how to use the script.'))
+        sys.exit()
+    # end if
+
+# end parse_cl_args(args)
+
 
 
 """Prints out the message passed in. Used for debugging
@@ -44,7 +80,7 @@ def get_args(args):
     # Check if the user passes in the page URL as page="abc"
     for a in args:
         try:
-            page_arg = a.index('page=')
+            page_arg = a.index('-page')
             return create_wiki_url(a)
             
         except:
@@ -87,8 +123,9 @@ Returns:
 """
 def create_wiki_url(page_arg):
     # Find the = in the arg
-    equal_loc = page_arg.index('=') + 1
+    equal_loc = page_arg.index('-page') + 6
     page_name = page_arg[equal_loc:]
+    print (page_name)
 
     # Convert all spaces to underscores
     page_name = page_name.replace(' ', '_')
