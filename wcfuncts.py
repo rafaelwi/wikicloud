@@ -22,6 +22,20 @@ from contextlib import closing
 from bs4 import BeautifulSoup
 import lxml
 
+
+"""Prints out the message passed in. Used for debugging
+
+Args:
+    m: A message
+
+Returns: 
+    the message
+"""
+def log_message(m):
+    print (m)
+# end log_message(m)
+
+
 """ Parse arguements from command line
 
 Args:
@@ -63,20 +77,6 @@ def parse_cl_args(args):
         print(raw_article)
     # end else
 # end parse_cl_args(args)
-
-
-
-"""Prints out the message passed in. Used for debugging
-
-Args:
-    m: A message
-
-Returns: 
-    the message
-"""
-def log_message(m):
-    print (m)
-# end log_message(m)
 
 
 """Gets the URL and verifies that it is valid
