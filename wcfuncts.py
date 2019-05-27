@@ -73,10 +73,26 @@ def parse_cl_args(args):
     # --article/-a arguement
     elif args.article:
         raw_article = args.article
-        # TODO Check if article is just name or a URL
-        print(raw_article)
+        article_url = validate_article(raw_article)
+        print(article_url)
+        return(article_url)
     # end else
 # end parse_cl_args(args)
+
+
+def validate_article(article):
+    # Check if what has been passed in is a URL or just the name of an article
+    # If URL is passed in
+    if ((article.split('/')[0] == 'https:') & 
+        (article.split('/')[2] == 'en.wikipedia.org') &
+        (article.split('/')[3] == 'wiki')):
+        return article
+
+    # If an article name is passed in
+    else:
+        article_name = article.replace(' ', '_')
+        return ('https://en.wikipedia.org/wiki/{}'.format(article_name))
+# end validate_article(article)
 
 
 """Gets the URL and verifies that it is valid
