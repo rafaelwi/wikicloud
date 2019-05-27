@@ -39,7 +39,7 @@ Args:
     args: A list of arguements from the command line
 
 Returns: 
-    pass
+    Article URL if -a flag is used, version number or about otherwise
 """
 def parse_cl_args(args):
     # Set up arguements parser
@@ -55,7 +55,7 @@ def parse_cl_args(args):
 
     # --version/-v arguement
     if args.version:
-        log_message('wikicloud ver. 2019.05.26.01')
+        log_message('wikicloud ver. 2019.05.27.06')
         sys.exit()
     # end if
 
@@ -74,6 +74,7 @@ def parse_cl_args(args):
         return(article_url)
     # end else
 # end parse_cl_args(args)
+
 
 """Validate the input of the article input from command line
 
