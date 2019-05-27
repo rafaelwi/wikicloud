@@ -91,26 +91,6 @@ def validate_article(article):
 # end validate_article(article)
 
 
-"""Creates a wikipedia URL when a page name is passed through
-
-Args:
-    page_arg: The arguement containing the page name
-
-Returns:
-    A Wikipedia URL for the page requested
-"""
-def create_wiki_url(page_arg):
-    # Find the = in the arg
-    equal_loc = page_arg.index('-page') + 6
-    page_name = page_arg[equal_loc:]
-    print (page_name)
-
-    # Convert all spaces to underscores
-    page_name = page_name.replace(' ', '_')
-    return ('https://en.wikipedia.org/wiki/{}'.format(page_name))
-# end create_wiki_url(page_arg)
-
-
 """Gets the filename of the plot
 
 Args:
