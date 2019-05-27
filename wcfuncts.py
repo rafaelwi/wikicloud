@@ -3,9 +3,6 @@
 
 """
 TODO NEXT:
-- Make arguments more 'unix' style, i.e., -page 'Bananas' rather than
-  page='Bananas'
-  - Add a -help command
 - Allow changing the attributes of the plot generated
 """
 
@@ -74,7 +71,6 @@ def parse_cl_args(args):
     elif args.article:
         raw_article = args.article
         article_url = validate_article(raw_article)
-        print(article_url)
         return(article_url)
     # end else
 # end parse_cl_args(args)
@@ -93,51 +89,6 @@ def validate_article(article):
         article_name = article.replace(' ', '_')
         return ('https://en.wikipedia.org/wiki/{}'.format(article_name))
 # end validate_article(article)
-
-
-"""Gets the URL and verifies that it is valid
-
-Args:
-    args: List of arguments from the command line
-
-Returns:
-    the URL entered
-"""
-def get_args(args):
-    # Check if the user passes in the page URL as page="abc"
-    for a in args:
-        try:
-            page_arg = a.index('-page')
-            return create_wiki_url(a)
-            
-        except:
-            pass
-
-    # Check if the correct number of args was passed in
-    if len(args) != 2:
-        log_message('Usage: python3 cloud.py <wikipedia URL>')
-        sys.exit()
-    # end if
-
-    # Get the URL and check that it is valid
-    raw_url = args[1]
-    split_url = raw_url.split('/')
-
-    # Validate and return URL
-    if (len(split_url) == 5) & (split_url[3] == 'wiki'):
-        return raw_url
-    # end if
-    
-    # If the URL is not valid
-    else:
-        log_message((
-            'Error: Ending execution due to invalid URL passed in: <{}>'
-            ' URL should be in the form of \x1b[1mhttps://en.wikipedia.org/wik'
-            'i/Article_Name \x1b[0m'.format(raw_url)
-            ))
-        sys.exit()
-    # end else
-# end get_args(args)
 
 
 """Creates a wikipedia URL when a page name is passed through
