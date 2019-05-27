@@ -75,7 +75,14 @@ def parse_cl_args(args):
     # end else
 # end parse_cl_args(args)
 
+"""Validate the input of the article input from command line
 
+Args:
+    article: URL or name of article
+
+Returns:
+    A URL of the article
+"""
 def validate_article(article):
     # Check if what has been passed in is a URL or just the name of an article
     # If URL is passed in
@@ -102,7 +109,6 @@ Returns:
 def get_filename(url):
     return url.split('/')[4] + '.png'
 # end get_filename(ur;)
-
 
 
 """Gets the page source of a requested website
