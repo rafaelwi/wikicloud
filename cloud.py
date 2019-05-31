@@ -7,6 +7,8 @@ import wcfuncts as wc
 
 """ Main Program """
 # Data order: Height (-hi), Width (-wi), Background Color (-bg)
+# The colors that can be used for -bg can be found here:
+#   https://drafts.csswg.org/css-color-4/#named-colors
 cloud_format = [800, 800, 'white']
 
 # Parse command line arguements

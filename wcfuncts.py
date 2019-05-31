@@ -56,6 +56,8 @@ def parse_cl_args(args, cloud_format):
         type=int)
     parser.add_argument('-wi', '--width', help='the width of the word cloud',
         type=int)
+    parser.add_argument('-bg', '--background_color', help=('background color '
+        'of the word plot'))
 
     args = parser.parse_args()
 
@@ -81,6 +83,10 @@ def parse_cl_args(args, cloud_format):
     # --width/-wi argument
     if (args.width) & (args.width > 0):
         cloud_format[1] = args.width
+
+    # --bg/-background_color argument
+    if (args.background_color):
+        cloud_format[2] = args.background_color
 
     # --article/-a arguement
     if args.article:
@@ -219,13 +225,14 @@ def generate_word_cloud(text, filename, cloud_format):
     cloud = WordCloud(height = cloud_format[0], width = cloud_format[1],  
         background_color = cloud_format[2], stopwords = stopwords, 
         min_font_size = 10).generate(text)
-    plt.figure(figsize = (8, 8), facecolor = None)
+    plt.figure(figsize = (8, 8), facecolor = cloud_format[2])
+    plt.facecolor = (cloud_format[2])
     plt.imshow(cloud)
     plt.axis("off")
     plt.tight_layout(pad = 0)
 
     # Save the word cloud
-    plt.savefig(filename, bbox_inches='tight')
+    cloud.to_file(filename)
     log_message('Saved plot as {}!'.format(filename))
 # end generate_word_cloud(text, filename)
 ### end of file wcfuncts.py ###
