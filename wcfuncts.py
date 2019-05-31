@@ -3,11 +3,14 @@
 
 """
 TODO NEXT:
+- Fix README
+- Make plots go to plots folder in Pictures folder
 - Allow changing the attributes of the plot generated
 """
 
 """ Imports """
 import sys
+import argparse
 
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
@@ -32,68 +35,91 @@ def log_message(m):
 # end log_message(m)
 
 
-"""Gets the URL and verifies that it is valid
+""" Parse arguements from command line
 
 Args:
-    args: List of arguments from the command line
+    args: A list of arguements from the command line
 
-Returns:
-    the URL entered
+Returns: 
+    Article URL if -a flag is used, version number or about otherwise
 """
-def get_args(args):
-    # Check if the user passes in the page URL as page="abc"
-    for a in args:
-        try:
-            page_arg = a.index('page=')
-            return create_wiki_url(a)
-            
-        except:
-            pass
+def parse_cl_args(args, cloud_format):
+    # Set up arguements parser
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-v', '--version', action="store_true", 
+        help='shows version number')
+    parser.add_argument('-ab', '--about', action="store_true", 
+        help='shows about the author')
+    parser.add_argument('-a', '--article', help=('the name or URL of the art'
+        'icle of which you want to generate a word cloud for'))
+    parser.add_argument('-hi', '--height', help='the height of the word cloud',
+        type=int)
+    parser.add_argument('-wi', '--width', help='the width of the word cloud',
+        type=int)
+    parser.add_argument('-bg', '--background_color', help=('background color '
+        'of the word plot'))
 
-    # Check if the correct number of args was passed in
-    if len(args) != 2:
-        log_message('Usage: python3 cloud.py <wikipedia URL>')
+    args = parser.parse_args()
+
+    # --version/-v arguement
+    if args.version:
+        log_message('wikicloud ver. 2019.05.30')
         sys.exit()
     # end if
 
-    # Get the URL and check that it is valid
-    raw_url = args[1]
-    split_url = raw_url.split('/')
+    # --about/-ab arguement
+    elif args.about:
+        log_message(('wikicloud is a python script written by rafaelwi that '
+            'generates word clouds from wikipedia articles. Use `python3 '
+            ' cloud.py --help` to learn how to use the script.'))
+        sys.exit()
+    # end elif
 
-    # Validate and return URL
-    if (len(split_url) == 5) & (split_url[3] == 'wiki'):
-        return raw_url
-    # end if
+    # Formatting for the word cloud
+    # --height/-hi argument
+    if (args.height) & (args.height > 0):
+        cloud_format[0] = args.height
     
-    # If the URL is not valid
-    else:
-        log_message((
-            'Error: Ending execution due to invalid URL passed in: <{}>'
-            ' URL should be in the form of \x1b[1mhttps://en.wikipedia.org/wik'
-            'i/Article_Name \x1b[0m'.format(raw_url)
-            ))
-        sys.exit()
+    # --width/-wi argument
+    if (args.width) & (args.width > 0):
+        cloud_format[1] = args.width
+
+    # --bg/-background_color argument
+    if (args.background_color):
+        cloud_format[2] = args.background_color
+
+    # --article/-a arguement
+    if args.article:
+        raw_article = args.article
+        print(raw_article)
+        article_url = validate_article(raw_article)
+        return(article_url)
     # end else
-# end get_args(args)
+# end parse_cl_args(args)
 
 
-"""Creates a wikipedia URL when a page name is passed through
+"""Validate the input of the article input from command line
 
 Args:
-    page_arg: The arguement containing the page name
+    article: URL or name of article
 
 Returns:
-    A Wikipedia URL for the page requested
+    A URL of the article
 """
-def create_wiki_url(page_arg):
-    # Find the = in the arg
-    equal_loc = page_arg.index('=') + 1
-    page_name = page_arg[equal_loc:]
+def validate_article(article):
+    # Check if what has been passed in is a URL or just the name of an article
+    # If URL is passed in
+    if article.startswith('https://en.wikipedia.org/wiki'):
+        if ((article.split('/')[0] == 'https:') & 
+            (article.split('/')[2] == 'en.wikipedia.org') &
+            (article.split('/')[3] == 'wiki')):
+                return article
 
-    # Convert all spaces to underscores
-    page_name = page_name.replace(' ', '_')
-    return ('https://en.wikipedia.org/wiki/{}'.format(page_name))
-# end create_wiki_url(page_arg)
+    # If an article name is passed in
+    else:
+        article_name = article.replace(' ', '_')
+        return ('https://en.wikipedia.org/wiki/{}'.format(article_name))
+# end validate_article(article)
 
 
 """Gets the filename of the plot
@@ -107,7 +133,6 @@ Returns:
 def get_filename(url):
     return url.split('/')[4] + '.png'
 # end get_filename(ur;)
-
 
 
 """Gets the page source of a requested website
@@ -191,21 +216,23 @@ Args:
 Returns:
     no value. Creates a word cloud as an image and saves it
 """
-def generate_word_cloud(text, filename):
+def generate_word_cloud(text, filename, cloud_format):
     # Word cloud set up
     stopwords = STOPWORDS
     
     # Generate the word cloud
     log_message ('Generating plot...')
-    cloud = WordCloud(width = 800, height = 800, background_color = 'white', 
-        stopwords = stopwords, min_font_size = 10).generate(text)
-    plt.figure(figsize = (8, 8), facecolor = None)
+    cloud = WordCloud(height = cloud_format[0], width = cloud_format[1],  
+        background_color = cloud_format[2], stopwords = stopwords, 
+        min_font_size = 10).generate(text)
+    plt.figure(figsize = (8, 8), facecolor = cloud_format[2])
+    plt.facecolor = (cloud_format[2])
     plt.imshow(cloud)
     plt.axis("off")
     plt.tight_layout(pad = 0)
 
     # Save the word cloud
-    plt.savefig(filename, bbox_inches='tight')
+    cloud.to_file(filename)
     log_message('Saved plot as {}!'.format(filename))
 # end generate_word_cloud(text, filename)
 ### end of file wcfuncts.py ###

@@ -6,8 +6,13 @@ import sys
 import wcfuncts as wc 
 
 """ Main Program """
-# Get URL
-url = wc.get_args(sys.argv)
+# Data order: Height (-hi), Width (-wi), Background Color (-bg)
+# The colors that can be used for -bg can be found here:
+#   https://drafts.csswg.org/css-color-4/#named-colors
+cloud_format = [800, 800, 'white']
+
+# Parse command line arguements
+url = wc.parse_cl_args(sys.argv, cloud_format)
 
 # Get filename
 filename = wc.get_filename(url)
@@ -16,6 +21,6 @@ filename = wc.get_filename(url)
 page_text = wc.get_page_text(url)
 
 # Generate and save word cloud
-wc.generate_word_cloud(page_text, filename)
+wc.generate_word_cloud(page_text, filename, cloud_format)
 
 ### end of script cloud.py ###
