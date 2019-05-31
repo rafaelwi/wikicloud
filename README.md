@@ -16,7 +16,9 @@ wikipedia word cloud generator in python3
 To get a specific article:
 
 `python3 cloud.py -a https://en.wikipedia.org/wiki/GitHub` or 
+
 `python3 cloud.py -a GitHub` or
+
 `python3 cloud.py -a 'New York City'`
 
 
