@@ -63,7 +63,7 @@ def parse_cl_args(args, cloud_format):
 
     # --version/-v arguement
     if args.version:
-        log_message('wikicloud ver. 2019.05.27.06')
+        log_message('wikicloud ver. 2019.05.30')
         sys.exit()
     # end if
 
