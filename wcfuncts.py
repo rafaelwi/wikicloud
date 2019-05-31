@@ -52,7 +52,9 @@ def parse_cl_args(args, cloud_format):
         help='shows about the author')
     parser.add_argument('-a', '--article', help=('the name or URL of the art'
         'icle of which you want to generate a word cloud for'))
-    parser.add_argument('-hi', '--height', help='the width of the word cloud',
+    parser.add_argument('-hi', '--height', help='the height of the word cloud',
+        type=int)
+    parser.add_argument('-wi', '--width', help='the width of the word cloud',
         type=int)
 
     args = parser.parse_args()
@@ -72,8 +74,13 @@ def parse_cl_args(args, cloud_format):
     # end elif
 
     # Formatting for the word cloud
-    if args.height:
+    # --height/-hi argument
+    if (args.height) & (args.height > 0):
         cloud_format[0] = args.height
+    
+    # --width/-wi argument
+    if (args.width) & (args.width > 0):
+        cloud_format[1] = args.width
 
     # --article/-a arguement
     if args.article:
