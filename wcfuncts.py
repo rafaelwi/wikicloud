@@ -3,6 +3,8 @@
 
 """
 TODO NEXT:
+- Fix README
+- Make plots go to plots folder in Pictures folder
 - Allow changing the attributes of the plot generated
 """
 
@@ -41,7 +43,7 @@ Args:
 Returns: 
     Article URL if -a flag is used, version number or about otherwise
 """
-def parse_cl_args(args):
+def parse_cl_args(args, cloud_format):
     # Set up arguements parser
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', '--version', action="store_true", 
@@ -50,6 +52,8 @@ def parse_cl_args(args):
         help='shows about the author')
     parser.add_argument('-a', '--article', help=('the name or URL of the art'
         'icle of which you want to generate a word cloud for'))
+    parser.add_argument('-hi', '--height', help='the width of the word cloud',
+        type=int)
 
     args = parser.parse_args()
 
@@ -67,9 +71,14 @@ def parse_cl_args(args):
         sys.exit()
     # end elif
 
+    # Formatting for the word cloud
+    if args.height:
+        cloud_format[0] = args.height
+
     # --article/-a arguement
-    elif args.article:
+    if args.article:
         raw_article = args.article
+        print(raw_article)
         article_url = validate_article(raw_article)
         return(article_url)
     # end else
@@ -87,10 +96,11 @@ Returns:
 def validate_article(article):
     # Check if what has been passed in is a URL or just the name of an article
     # If URL is passed in
-    if ((article.split('/')[0] == 'https:') & 
-        (article.split('/')[2] == 'en.wikipedia.org') &
-        (article.split('/')[3] == 'wiki')):
-        return article
+    if article.startswith('https://en.wikipedia.org/wiki'):
+        if ((article.split('/')[0] == 'https:') & 
+            (article.split('/')[2] == 'en.wikipedia.org') &
+            (article.split('/')[3] == 'wiki')):
+                return article
 
     # If an article name is passed in
     else:
@@ -193,14 +203,15 @@ Args:
 Returns:
     no value. Creates a word cloud as an image and saves it
 """
-def generate_word_cloud(text, filename):
+def generate_word_cloud(text, filename, cloud_format):
     # Word cloud set up
     stopwords = STOPWORDS
     
     # Generate the word cloud
     log_message ('Generating plot...')
-    cloud = WordCloud(width = 800, height = 800, background_color = 'white', 
-        stopwords = stopwords, min_font_size = 10).generate(text)
+    cloud = WordCloud(height = cloud_format[0], width = cloud_format[1],  
+        background_color = cloud_format[2], stopwords = stopwords, 
+        min_font_size = 10).generate(text)
     plt.figure(figsize = (8, 8), facecolor = None)
     plt.imshow(cloud)
     plt.axis("off")
