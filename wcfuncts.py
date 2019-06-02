@@ -50,8 +50,8 @@ def parse_cl_args(args, cloud_format):
         help='shows version number')
     parser.add_argument('-ab', '--about', action="store_true", 
         help='shows about the author')
-    parser.add_argument('-a', '--article', help=('the name or URL of the art'
-        'icle of which you want to generate a word cloud for'))
+    parser.add_argument('-a', '--article', help=('the name or URL of the '
+        'article of which you want to generate a word cloud for'))
     parser.add_argument('-hi', '--height', help='the height of the word cloud',
         type=int)
     parser.add_argument('-wi', '--width', help='the width of the word cloud',
@@ -59,8 +59,8 @@ def parse_cl_args(args, cloud_format):
     parser.add_argument('-bg', '--background_color', help=('background color '
         'of the word plot'))
     parser.add_argument('-f', '--font', help='font used in the word cloud')
-    parser.add_argument('-s', '--scale', help=('sets the scale of the text in'
-    ' the word cloud'), type=float)
+    parser.add_argument('-s', '--scale', help=('sets the scale of the text '
+        'in the word cloud'), type=float)
 
     args = parser.parse_args()
 
@@ -182,7 +182,7 @@ Returns:
 """
 def is_good_response(resp):
     return (resp.status_code == 200 and resp.headers['Content-Type'].lower() 
-    is not None and resp.headers['Content-Type'].lower().find('html') > -1)
+        is not None and resp.headers['Content-Type'].lower().find('html') > -1)
 # end is_good_response(resp)
 
 
@@ -201,8 +201,8 @@ def get_page_text(url):
     # Check if a valid page was fetched
     if raw_html == None:
         log_message(('Error: Ending execution due to no article named "{}" on '
-        'Wikipedia. Please make sure you have typed in the page name '
-        'correctly'.format(url.split('/')[4].replace('_', ' '))))
+            'Wikipedia. Please make sure you have typed in the page name '
+            'correctly'.format(url.split('/')[4].replace('_', ' '))))
         sys.exit()
     # end if
 
@@ -257,6 +257,6 @@ def generate_word_cloud(text, filename, cloud_format):
 
     # Save the word cloud
     cloud.to_file(filename)
-    log_message('Saved plot as {}!'.format(filename))
+    log_message('Saved word cloud as {}!'.format(filename))
 # end generate_word_cloud(text, filename)
 ### end of file wcfuncts.py ###
