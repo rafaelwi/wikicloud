@@ -59,6 +59,8 @@ def parse_cl_args(args, cloud_format):
     parser.add_argument('-bg', '--background_color', help=('background color '
         'of the word plot'))
     parser.add_argument('-f', '--font', help='font used in the word cloud')
+    parser.add_argument('-s', '--scale', help=('sets the scale of the text in'
+    ' the word cloud'), type=float)
 
     args = parser.parse_args()
 
@@ -94,6 +96,11 @@ def parse_cl_args(args, cloud_format):
     # --font/-f arguement
     if (args.font):
         cloud_format[3] = args.font
+
+    # --scale/-s arguement
+    if (args.scale):
+        if (args.scale > 0):
+            cloud_format[4] = args.scale
 
     # --article/-a arguement
     if args.article:
@@ -232,13 +239,16 @@ def generate_word_cloud(text, filename, cloud_format):
     try:
         cloud = WordCloud(height = cloud_format[0], width = cloud_format[1],  
             background_color = cloud_format[2], font_path = cloud_format[3],
-            stopwords = stopwords, min_font_size = 10).generate(text)
+            scale = cloud_format[4], stopwords = stopwords, 
+            min_font_size = 10).generate(text)
     except:
-        log_message(('Could not generate word cloud due to bad font path, '
-            'using fallback font DroidSansMono'))
+        if cloud_format[3] != 'font':
+            log_message(('Could not generate word cloud due to bad font path, '
+                'using fallback font DroidSansMono'))
         cloud = WordCloud(height = cloud_format[0], width = cloud_format[1],  
             background_color = cloud_format[2], stopwords = stopwords, 
             min_font_size = 10).generate(text)
+
     plt.figure(figsize = (8, 8), facecolor = cloud_format[2])
     plt.facecolor = (cloud_format[2])
     plt.imshow(cloud)

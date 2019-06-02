@@ -6,10 +6,10 @@ import sys
 import wcfuncts as wc 
 
 """ Main Program """
-# Data order: Height (-hi), Width (-wi), Background Color (-bg)
+# Data order: Height (-hi), Width (-wi), Background Color (-bg), Font (-f)
 # The colors that can be used for -bg can be found here:
 #   https://drafts.csswg.org/css-color-4/#named-colors
-cloud_format = [800, 800, 'white', 'DroidSansMono']
+cloud_format = [800, 800, 'white', 'font', 1]
 
 # Parse command line arguements
 url = wc.parse_cl_args(sys.argv, cloud_format)
