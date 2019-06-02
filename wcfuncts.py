@@ -22,6 +22,16 @@ from bs4 import BeautifulSoup
 import lxml
 
 
+""" Classes """
+class CloudFormat:
+    height = 800
+    width = 800
+    background_color = 'white'
+    font_path = 'font' # Will use the default font from WordCloud object
+    scale = 1
+# end class CloudFormat
+
+
 """Prints out the message passed in. Used for debugging
 
 Args:
