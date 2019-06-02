@@ -228,10 +228,17 @@ def generate_word_cloud(text, filename, cloud_format):
     stopwords = STOPWORDS
     
     # Generate the word cloud
-    log_message ('Generating plot...')
-    cloud = WordCloud(height = cloud_format[0], width = cloud_format[1],  
-        background_color = cloud_format[2], font_path = cloud_format[3],
-        stopwords = stopwords, min_font_size = 10).generate(text)
+    log_message('Generating plot...')
+    try:
+        cloud = WordCloud(height = cloud_format[0], width = cloud_format[1],  
+            background_color = cloud_format[2], font_path = cloud_format[3],
+            stopwords = stopwords, min_font_size = 10).generate(text)
+    except:
+        log_message(('Could not generate word cloud due to bad font path, '
+            'using fallback font DroidSansMono'))
+        cloud = WordCloud(height = cloud_format[0], width = cloud_format[1],  
+            background_color = cloud_format[2], stopwords = stopwords, 
+            min_font_size = 10).generate(text)
     plt.figure(figsize = (8, 8), facecolor = cloud_format[2])
     plt.facecolor = (cloud_format[2])
     plt.imshow(cloud)
