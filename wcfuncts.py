@@ -58,6 +58,7 @@ def parse_cl_args(args, cloud_format):
         type=int)
     parser.add_argument('-bg', '--background_color', help=('background color '
         'of the word plot'))
+    parser.add_argument('-f', '--font', help='font used in the word cloud')
 
     args = parser.parse_args()
 
@@ -77,16 +78,22 @@ def parse_cl_args(args, cloud_format):
 
     # Formatting for the word cloud
     # --height/-hi argument
-    if (args.height) & (args.height > 0):
-        cloud_format[0] = args.height
+    if (args.height):
+        if (args.height > 0):
+            cloud_format[0] = args.height
     
     # --width/-wi argument
-    if (args.width) & (args.width > 0):
-        cloud_format[1] = args.width
+    if (args.width):
+        if (args.width > 0):
+            cloud_format[1] = args.width
 
-    # --bg/-background_color argument
+    # --background_color/-bg argument
     if (args.background_color):
         cloud_format[2] = args.background_color
+
+    # --font/-f arguement
+    if (args.font):
+        cloud_format[3] = args.font
 
     # --article/-a arguement
     if args.article:
@@ -223,8 +230,8 @@ def generate_word_cloud(text, filename, cloud_format):
     # Generate the word cloud
     log_message ('Generating plot...')
     cloud = WordCloud(height = cloud_format[0], width = cloud_format[1],  
-        background_color = cloud_format[2], stopwords = stopwords, 
-        min_font_size = 10).generate(text)
+        background_color = cloud_format[2], font_path = cloud_format[3],
+        stopwords = stopwords, min_font_size = 10).generate(text)
     plt.figure(figsize = (8, 8), facecolor = cloud_format[2])
     plt.facecolor = (cloud_format[2])
     plt.imshow(cloud)

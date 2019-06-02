@@ -9,7 +9,7 @@ import wcfuncts as wc
 # Data order: Height (-hi), Width (-wi), Background Color (-bg)
 # The colors that can be used for -bg can be found here:
 #   https://drafts.csswg.org/css-color-4/#named-colors
-cloud_format = [800, 800, 'white']
+cloud_format = [800, 800, 'white', 'DroidSansMono']
 
 # Parse command line arguements
 url = wc.parse_cl_args(sys.argv, cloud_format)
