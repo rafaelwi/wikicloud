@@ -24,11 +24,12 @@ import lxml
 
 """ Classes """
 class CloudFormat:
-    height = 800
-    width = 800
-    background_color = 'white'
-    font_path = 'font' # Will use the default font from WordCloud object
-    scale = 1
+    def __init__(self, height, width, background_color, font_path, scale):
+        self.height = 800
+        self.width = 800
+        self.background_color = 'white'
+        self.font_path = 'font' # Will use the default font from WordCloud object
+        self.scale = 1
 # end class CloudFormat
 
 
@@ -92,25 +93,25 @@ def parse_cl_args(args, cloud_format):
     # --height/-hi argument
     if (args.height):
         if (args.height > 0):
-            cloud_format[0] = args.height
+            cloud_format.height = args.height
     
     # --width/-wi argument
     if (args.width):
         if (args.width > 0):
-            cloud_format[1] = args.width
+            cloud_format.width = args.width
 
     # --background_color/-bg argument
     if (args.background_color):
-        cloud_format[2] = args.background_color
+        cloud_format.background_color = args.background_color
 
     # --font/-f arguement
     if (args.font):
-        cloud_format[3] = args.font
+        cloud_format.font_path = args.font
 
     # --scale/-s arguement
     if (args.scale):
         if (args.scale > 0):
-            cloud_format[4] = args.scale
+            cloud_format.scale = args.scale
 
     # --article/-a arguement
     if args.article:
@@ -240,29 +241,32 @@ Args:
 Returns:
     no value. Creates a word cloud as an image and saves it
 """
-def generate_word_cloud(text, filename, cloud_format):
+def generate_word_cloud(text, filename, cloud_format : CloudFormat):
     # Word cloud set up
     stopwords = STOPWORDS
     
     # Generate the word cloud
     log_message('Generating plot...')
     try:
-        cloud = WordCloud(height = cloud_format[0], width = cloud_format[1],  
-            background_color = cloud_format[2], font_path = cloud_format[3],
-            scale = cloud_format[4], stopwords = stopwords, 
-            min_font_size = 10).generate(text)
+        cloud = WordCloud(height = cloud_format.height, 
+            width = cloud_format.width,  
+            background_color = cloud_format.background_color, 
+            font_path = cloud_format.font_path, scale = cloud_format.scale, 
+            stopwords = stopwords, min_font_size = 10).generate(text)
     except:
-        if cloud_format[3] != 'font':
+        if cloud_format.font_path != 'font':
             log_message(('Could not generate word cloud due to bad font path, '
                 'using fallback font DroidSansMono'))
-        cloud = WordCloud(height = cloud_format[0], width = cloud_format[1],  
-            background_color = cloud_format[2], stopwords = stopwords, 
+        cloud = WordCloud(height = cloud_format.height, 
+            width = cloud_format.width,  
+            background_color = cloud_format.background_color, 
+            scale = cloud_format.scale, stopwords = stopwords, 
             min_font_size = 10).generate(text)
 
-    plt.figure(figsize = (8, 8), facecolor = cloud_format[2])
-    plt.facecolor = (cloud_format[2])
+    plt.figure(figsize = (8, 8), facecolor = cloud_format.background_color)
+    plt.facecolor = (cloud_format.background_color)
     plt.imshow(cloud)
-    plt.axis("off")
+    plt.axis('off')
     plt.tight_layout(pad = 0)
 
     # Save the word cloud
