@@ -15,30 +15,36 @@ wikipedia word cloud generator in python3
 ## Using the script
 To get a specific article:
 
-`python3 cloud.py -a https://en.wikipedia.org/wiki/GitHub` or 
-
-`python3 cloud.py -a GitHub` or
-
-`python3 cloud.py -a 'New York City'`
+    python3 cloud.py -a https://en.wikipedia.org/wiki/GitHub or 
+    python3 cloud.py -a GitHub or
+    python3 cloud.py -a 'New York City'
 
 
 To specify the height and width, use the `-hi` and `-wi` options respectively. The defaults
-are `-hi 800 -wi 800``
+are `-hi 800 -wi 800`
 
-`python3 cloud.py -a Github -hi 1000 -wi 4000`
+    python3 cloud.py -a Github -hi 1000 -wi 4000
 
 
 To specify the background color, use the `-bg` option. A list of possible arguements can be
 found [here](https://drafts.csswg.org/css-color-4/#named-colors)
 
-`python3 cloud.py -a GitHub -bg 'darkviolet'`
+    python3 cloud.py -a GitHub -bg 'darkviolet'
+
+
+To specify a font:
+    
+    python3 cloud.py -a GitHub -f 'Arial'
  
  
  For help in the command line, use:
- `python3 cloud.py --help`
+    
+    python3 cloud.py --help
+
 
 # To add
-- Set fonts
 - Set font sizes
+- Include examples
+- Save to user's `Pictures` folder
 
 
