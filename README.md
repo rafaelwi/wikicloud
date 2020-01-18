@@ -1,5 +1,5 @@
 # wikicloud
-wikipedia word cloud generator in python3
+Wikipedia word cloud generator in Python3
 
 # Features
 - Can generate word clouds from a Wikipedia article
@@ -8,7 +8,7 @@ wikipedia word cloud generator in python3
 
 # Running
 1. Clone the repo using `git clone https://github.com/rafaelwi/wikicloud.git`
-2. Ensure that you have `requests`, `matplotlib`, `BeautifulSoup`, and `lxml` are installed with `pip3`
+2. Ensure that you have `requests`, `matplotlib`, `BeautifulSoup`, and `lxml`, which are installed with `pip3`
 3. Run the script with command below
 4. Find the image of the plot in the `plots` folder
 
@@ -29,7 +29,7 @@ are `-hi 800 -wi 800``
 
 
 To specify the background color, use the `-bg` option. A list of possible arguements can be
-found [here](https://drafts.csswg.org/css-color-4/#named-colors)
+found [here](https://drafts.csswg.org/css-color-4/#named-colors).
 
 `python3 cloud.py -a GitHub -bg 'darkviolet'`
  
