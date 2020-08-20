@@ -1,6 +1,8 @@
 # wikicloud
 Wikipedia word cloud generator in Python3
 
+![Word cloud example](https://raw.githubusercontent.com/rafaelwi/rafaelwi.github.io/master/assets/img/wordcloud.png)
+
 # Features
 - Can generate word clouds from a Wikipedia article
 - Customize the size and look of the cloud
